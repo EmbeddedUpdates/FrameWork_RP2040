@@ -1,0 +1,40 @@
+# File to select and add components to be compiled in this project
+
+#$(info Executing: $(PROJECT_NAME)/makefile.project.part.defines)
+
+#Linker Command File - leave blank to allow component to override
+#LINKER_COMMAND_FILE = #Source/rp2040.ld
+LINKER_COMMAND_FILE = 
+
+
+#Operating System List (1 is used, 0 is not used) - at least one is mandatory for default main.c
+OS_POLLING_USED = 0
+
+#Component List (1 is used, 0 is not used)
+RP2040_SDK_USED = 0 #Not directly supported in makefile yet
+BRS_RP2040_USED = 1
+BRS_RP2040_VERSION = 01.00.00
+PWM_SIMPLE_USED = 0
+
+
+# Component specific Makefile include
+ifeq ($(OS_POLLING_USED), 1)
+    include $(ROOT_DIR)/$(COMPONENTS_DIR)/os_polling/make/os_polling.mak
+endif
+
+ifeq ($(BRS_RP2040_USED), 1)
+    include $(ROOT_DIR)/$(COMPONENTS_DIR)/brs_rp2040/$(BRS_RP2040_VERSION)/make/brs_rp2040.mak
+endif
+
+ifeq ($(PWM_SIMPLE_USED), 1)
+    include $(ROOT_DIR)/$(COMPONENTS_DIR)/pwm_simple/make/pwm_simple.mak
+endif
+
+#Include Paths
+INCLUDE_PATH += ./Include
+INCLUDE_PATH += ./../../
+
+APP_SOURCE_LIST += Source/main.c
+
+#Specify other source files for this application
+#C_SOURCE_FILES += Source/test.c
