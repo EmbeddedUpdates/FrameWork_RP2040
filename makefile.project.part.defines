@@ -13,7 +13,6 @@ OS_POLLING_USED = 0
 #Component List (1 is used, 0 is not used)
 RP2040_SDK_USED = 0 #Not directly supported in makefile yet
 BRS_RP2040_USED = 1
-BRS_RP2040_VERSION = 01.00.00
 PWM_SIMPLE_USED = 0
 
 
@@ -23,7 +22,7 @@ ifeq ($(OS_POLLING_USED), 1)
 endif
 
 ifeq ($(BRS_RP2040_USED), 1)
-    include $(ROOT_DIR)/$(COMPONENTS_DIR)/brs_rp2040/$(BRS_RP2040_VERSION)/make/brs_rp2040.mak
+    include $(ROOT_DIR)/$(COMPONENTS_DIR)/brs_rp2040/make/brs_rp2040.mak
 endif
 
 ifeq ($(PWM_SIMPLE_USED), 1)

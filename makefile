@@ -30,7 +30,7 @@ INC += $(addprefix -I, $(INCLUDE_PATH))
 #Compiler flags
 COMPILER_DEFINES += 
 CCFLAGS = -mthumb -mcpu=cortex-m0plus -ggdb $(INC) -Wall -DENABLE_BRS_ASSERT#$(COMPILER_DEFINES)
-LDFLAGS = -T $(LINKER_COMMAND_FILE) -Map $(PROJECT_NAME).map
+LDFLAGS = -T $(LINKER_COMMAND_FILE) -Map $(OUT_DIR)/$(PROJECT_NAME).map
 #-L/Library/Developer/CommandLineTools/usr/lib/clang/13.1.6/lib/darwin/libclang_rt.builtins-arm.a -lgcc
 ASFLAGS = 
 
@@ -83,20 +83,6 @@ flash : $(OUT_DIR)/$(PROJECT_NAME).elf $(OUT_DIR)/$(PROJECT_NAME).bin
 	$(info ELF2UF2: $(OUT_DIR)/$(PROJECT_NAME).bin)
 	@$(ELF2UF2) $(OUT_DIR)/$(PROJECT_NAME).bin $(OUT_DIR)/$(PROJECT_NAME).uf2
 	$(info Done!)
-
-# notmain.uf2 : notmain.bin makeuf2
-# 	./makeuf2 notmain.bin notmain.uf2
-
-# start.o : start.s
-# 	$(ARMGNU)-as $(AOPS) start.s -o start.o
-
-# notmain.o : notmain.c
-# 	$(ARMGNU)-gcc $(COPS) -mthumb -c notmain.c -o notmain.o
-
-# notmain.bin :               memmap.ld start.o notmain.o
-# 	$(ARMGNU)-ld $(LOPS) -T memmap.ld start.o notmain.o -o notmain.elf
-# 	$(ARMGNU)-objdump -D notmain.elf > notmain.list
-# 	$(ARMGNU)-objcopy -O binary notmain.elf notmain.bin
 
 $(OUT_DIR)/$(PROJECT_NAME).bin : $(OUT_DIR)/$(PROJECT_NAME).elf
 	@mkdir -p $(OUT_DIR)
